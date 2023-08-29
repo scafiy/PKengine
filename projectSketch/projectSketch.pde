@@ -1,10 +1,10 @@
-PImage startUpScreen;
-PImage playerModel;
+PImage startUpScreen, characterSheet;
 
 int tileSize = 30;
+int playerSize = tileSize;
 
-int playerX = 0;
-int playerY = 0;
+int playerX = playerSize - tileSize ;
+int playerY = playerSize - tileSize ;
 
 
 void setup(){
@@ -12,7 +12,12 @@ void setup(){
     frameRate(30);
 
     startUpScreen = loadImage("images/start.jpg");
-    playerModel = loadImage("images/player.png");
+    characterSheet = loadImage("images/spritesheets/character.png");
+
+
+    grassTile = loadImage("images/tiles/grass.png");
+    smallGrass = loadImage("images/tiles/smallGrass.png");
+    forest = loadImage("images/tiles/forest.png");
 
     stateStack.add(State.STARTMENU);
     stateStack.add(State.OVERWORLD);
