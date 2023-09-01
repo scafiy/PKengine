@@ -1,30 +1,47 @@
-PImage startUpScreen, characterSheet;
+import java.util.Stack; 
 
-int tileSize = 30;
-int playerSize = tileSize;
+enum State {STARTMENU, OVERWORLD, BATTLE, DIALOGUE}
 
-int playerX = playerSize - tileSize ;
-int playerY = playerSize - tileSize ;
+private Stack<State> stateStack = new Stack<State>();
 
+PImage startUpScreen;
+
+int tileSize = 40;
 
 void setup(){
     size(450,450);
     frameRate(30);
 
-    startUpScreen = loadImage("images/start.jpg");
-    characterSheet = loadImage("images/spritesheets/character.png");
+    //load Pimages
+    startUpScreen = loadImage("images/backgrounds/start.jpg");
+    forest = loadImage("images/backgrounds/forest.png");
+    characterSheet = loadImage("images/spritesheets/characterSheet.png");
+    tileSheet = loadImage("images/spritesheets/tileSheet.png");
+    playerBattle = loadImage("images/spritesheets/playerBattle.png");
+    enemyBattle = loadImage("images/spritesheets/enemyBattle.png");
 
-
-    grassTile = loadImage("images/tiles/grass.png");
-    smallGrass = loadImage("images/tiles/smallGrass.png");
-    forest = loadImage("images/tiles/forest.png");
-
-    stateStack.add(State.STARTMENU);
-    stateStack.add(State.OVERWORLD);
+    //load states
     stateStack.add(State.BATTLE);
+    stateStack.add(State.OVERWORLD);
+    stateStack.add(State.STARTMENU);
 
+    player = new Player(0, 0); //construct player object
 }
 
+void draw(){
+    switch (stateStack.peek()) {
+        case STARTMENU :
+            image(startUpScreen, 0, 0, width, height); 
+        break;	
 
+        case OVERWORLD:
+            drawWorld();
+            player.drawSprite();
+            player.updatePosition();
+        break;
 
-
+        case BATTLE:
+            battle();
+        break;
+    }
+}
