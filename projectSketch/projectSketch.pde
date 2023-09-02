@@ -4,7 +4,7 @@ enum State {STARTMENU, OVERWORLD, BATTLE, DIALOGUE}
 
 private Stack<State> stateStack = new Stack<State>();
 
-PImage startUpScreen;
+PImage startUpBG;
 
 int tileSize = 40;
 
@@ -13,7 +13,7 @@ void setup(){
     frameRate(30);
 
     //load Pimages
-    startUpScreen = loadImage("images/backgrounds/start.jpg");
+    startUpBG = loadImage("images/backgrounds/start.jpg");
     forest = loadImage("images/backgrounds/forest.png");
     characterSheet = loadImage("images/spritesheets/characterSheet.png");
     tileSheet = loadImage("images/spritesheets/tileSheet.png");
@@ -26,12 +26,22 @@ void setup(){
     stateStack.add(State.STARTMENU);
 
     player = new Player(0, 0); //construct player object
+
+    surface.setTitle("RPGengine");
+    surface.setIcon(characterSheet.get(0, 0, 30, 30));
 }
 
 void draw(){
     switch (stateStack.peek()) {
         case STARTMENU :
-            image(startUpScreen, 0, 0, width, height); 
+            //image(startUpBG, 0, 0, width, height); 
+            background(0);
+            textAlign(CENTER, CENTER);
+            textSize(32);
+            fill(255);
+            text("RPG engine", width/2, height/2 - 11);
+            textSize(12);
+            text("press any button to start", width/2, height/2 + 24);
         break;	
 
         case OVERWORLD:
@@ -44,4 +54,5 @@ void draw(){
             battle();
         break;
     }
+    surface.setIcon(characterSheet.get(playerSheetX, playerSheetY, 30, 30)); //updates program icon to mimic the direct the character is facing in game which is cool
 }

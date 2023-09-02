@@ -5,7 +5,6 @@ void mousePressed() {
 }
 
 void keyPressed() {
-
     switch (stateStack.peek()) {
         case STARTMENU :
             stateStack.pop();
@@ -19,6 +18,7 @@ void keyPressed() {
             if (keyCode == 'B' || keyCode == 'b') {
                 stateStack.push(State.BATTLE);
             }
+            
         break;
 
         case BATTLE:
@@ -27,6 +27,4 @@ void keyPressed() {
             }
         break;
     }
-
-
 }

@@ -1,10 +1,7 @@
-PImage playerBattle, enemyBattle, dialogueBorder;
-
-
+PImage playerBattle, enemyBattle;
 
 void battle(){
     background(255,255,255);
-
 
     copy(enemyBattle, 
     0, 0, 197, 302,
@@ -14,9 +11,10 @@ void battle(){
     0, 0, 197, 302,
     0, height - height/2 - height/3, width/3, height/2); //draw player
 
-    fill(0);
+    fill(255);
+    strokeWeight(10);
+
     rect(0, height - height/3.5, width, height/3.5); //draw border for dialogue
-    //image(dialogueBorder, 0, height - height/3.5, width, height/3.5); //draw border for dialogue
 
     textSize(24);
     fill(0);

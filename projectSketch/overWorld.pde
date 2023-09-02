@@ -24,18 +24,17 @@ void drawWorld(){ //funciton display the overworld
 
     for(int row = 0 ; row < rows ; row++){  //draw the map
         for(int col = 0 ; col < cols ; col++ ){
+            
             int tile = tileMap[row][col];
 
-            if (tile == 0) {
-                copy(tileSheet, 
-                30, 0, 30, 30,
-                tileSize * col, tileSize * row, tileSize, tileSize); //draw player 
-            } 
-            
-            else if(tile == 1) {
-                copy(tileSheet, 
-                0, 0, 30, 30,
-                tileSize * col, tileSize * row, tileSize, tileSize); //draw player 
+            switch (tile){
+                case 0:
+                    copy(tileSheet, 30, 0, 30, 30, tileSize * col, tileSize * row, tileSize, tileSize); 
+                break;
+
+                case 1:
+                    copy(tileSheet, 0, 0, 30, 30, tileSize * col, tileSize * row, tileSize, tileSize);
+                break;
             }
         }
     }
