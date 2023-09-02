@@ -1,3 +1,3 @@
 # RPG engine
-> a simple game demos popular features from the RPG genre.
+> a simple game to demos features from the RPG genre.
 
