@@ -1,8 +1,11 @@
 import java.util.Stack; 
+//import processing.sound.*; //import sound processing library
+//SoundFile stepSound; 
 
-enum State {STARTMENU, OVERWORLD, BATTLE, DIALOGUE}
 
-private Stack<State> stateStack = new Stack<State>();
+enum gameState {STARTMENU, OVERWORLD, BATTLE, DIALOGUE, GAMEOVER}
+
+private Stack<gameState> stateStack = new Stack<gameState>();
 
 PImage startUpBG;
 
@@ -20,20 +23,24 @@ void setup(){
     playerBattle = loadImage("images/spritesheets/playerBattle.png");
     enemyBattle = loadImage("images/spritesheets/enemyBattle.png");
 
-    //load states
-    stateStack.add(State.BATTLE);
-    stateStack.add(State.OVERWORLD);
-    stateStack.add(State.STARTMENU);
+    //stepSound = new SoundFile(this, "sound/step.wav");
 
-    player = new Player(0, 0); //construct player object
+
+    //load states
+    stateStack.add(gameState.BATTLE);
+    stateStack.add(gameState.OVERWORLD);
+    stateStack.add(gameState.STARTMENU);
+
+    player = new Player(1, 0); //construct player object
 
     surface.setTitle("RPGengine");
     surface.setIcon(characterSheet.get(0, 0, 30, 30));
+
 }
 
 void draw(){
     switch (stateStack.peek()) {
-        case STARTMENU :
+        case STARTMENU:
             //image(startUpBG, 0, 0, width, height); 
             background(0);
             textAlign(CENTER, CENTER);
@@ -53,6 +60,20 @@ void draw(){
         case BATTLE:
             battle();
         break;
+
+        case GAMEOVER:
+            background(255, 0, 0);
+            textAlign(CENTER, CENTER);
+            textSize(32);
+            fill(0);
+            text("Game Over", width/2, height/2 - 11);
+            textSize(12);
+            text("press any button to revive", width/2, height/2 + 24);
+        break;	
+
     }
-    surface.setIcon(characterSheet.get(playerSheetX, playerSheetY, 30, 30)); //updates program icon to mimic the direct the character is facing in game which is cool
+
+    if (player.getCurrentHP() <= 0) stateStack.push(gameState.GAMEOVER);
+    
 }
+

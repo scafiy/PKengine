@@ -13,17 +13,79 @@ int playerYV = 0;  //y velocity of player
 int playerSheetX = 0; //x position on sprite sheet
 int playerSheetY = 0; //y position on sprite sheet
 
+Enemy currentEnemy;
 
 public class Player{
     //fields
     private int level;
-    private int exp;
-
+    private int currentEXP;
+    private int maxEXP;
+    private float currentHP;
+    private float maxHP;
+    private float ATK;
+    private float SPEED;
     
     //constructer
     public Player(int level, int exp) {
         this.level = level;
-        this.exp = exp;
+        this.currentEXP = currentEXP;
+        this.maxEXP = 10;
+        this.currentHP = 100;
+        this.maxHP = 100;
+        this.ATK = 10;
+        this.SPEED = 10;
+
+    }
+
+    public float getCurrentHP(){
+        return currentHP;
+    }
+
+    public void takeDamage(float damage){
+        if (this.currentHP != 0) this.currentHP -= damage;
+    }
+
+    public float getMaxHP(){
+        return maxHP;
+    }
+
+    public int getLevel(){
+        return level;
+    }
+
+    public float getATK(){
+        return ATK;
+    }
+
+    public float getSPEED(){
+        return SPEED;
+    }
+
+    public float getCurrentEXP(){
+        return currentEXP;
+    }
+
+    public float getMaxEXP(){
+        return maxEXP;
+    }
+
+
+    public void levelUp(double expGain){
+        currentEXP += expGain;
+        if (currentEXP >= maxEXP){
+            level++;
+            currentEXP = 0;
+            maxEXP += 10;
+            maxHP += 10;
+            currentHP = maxHP;
+            ATK += 5;
+            SPEED += 5;
+        }
+    }
+
+    public void heal(float HP){
+        if (currentHP + HP >= maxHP) currentHP = maxHP;
+        else currentHP += HP;
     }
 
     public void drawSprite(){ //draw player sprite
@@ -32,46 +94,49 @@ public class Player{
         playerX, playerY, tileSize, tileSize); 
     }
 
-    public void move(int keyCode) { 
-
-        if (keyCode == 38){ //move up
+    public void moveUp(){
             if(playerYV == 0 && playerXV == 0){
                 playerSheetX = 60;
             }
             if(playerY - tileSize >= 0 && playerYV == 0 && playerXV == 0){
                 playerYV -= tileSize;
             }
-        }
+        
+    }
 
-        if (keyCode == 40){ //move down
+    
+    public void moveDown(){
             if(playerYV == 0 && playerXV == 0){
                 playerSheetX = 0;
             }
             if( playerY + tileSize < rows * tileSize && playerYV == 0 && playerXV == 0){
                 playerYV += tileSize;
             }
+    }
 
-        }
-
-        if (keyCode == 37){ //move left
+    
+    public void moveLeft(){
             if(playerYV == 0 && playerXV == 0){
                 playerSheetX = 30;
             }
             if( playerX - tileSize >= 0 && playerYV == 0 && playerXV == 0){
                 playerXV -= tileSize;
             }
-        }
 
-        if (keyCode == 39){ //move right
+        
+    }
+
+    
+    public void moveRight(){
             if(playerYV == 0 && playerXV == 0){
                 playerSheetX = 90;
             }
             if( playerX + tileSize < cols * tileSize && playerYV == 0 && playerXV == 0){
                 playerXV += tileSize;
-            }
+            
         }
-
     }
+
 
 
     public void updatePosition(){ //move's player position based on velocity and displays walking animation
@@ -92,14 +157,11 @@ public class Player{
             playerY -= 4;
         }
 
-        if(playerXV != 0 || playerYV != 0){
-            if(playerSheetY == 30){
-                playerSheetY = 0;
-            }
-            else{
-                playerSheetY = 30;
-            }
+        if(playerXV != 0 || playerYV != 0){ //bad animation
+            if(playerSheetY == 30) playerSheetY = 0;
+            else playerSheetY = 30;
         }
+
     }
 
 }
