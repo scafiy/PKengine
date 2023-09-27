@@ -29,7 +29,7 @@ void keyPressed() {
 
             if (keyCode == 'B' || keyCode == 'b') {
                 stateStack.push(gameState.BATTLE);
-                currentEnemy = new Enemy("Bird", 1, 10, 100, 100, 10, 9);
+                currentEnemy = new Enemy("Bird", birdBattleSprite,  1, 10, 100, 100, 10, 9);
             }
             
         break;
@@ -41,5 +41,10 @@ void keyPressed() {
             if (keyCode == RIGHT) BMPointerRight();
             if (keyCode == 'Z' || keyCode == 'z') selectChoice();
         break;
+    }
+}
+
+void keyReleased(){
+    switch (stateStack.peek()) {
     }
 }

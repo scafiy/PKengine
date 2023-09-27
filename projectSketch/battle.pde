@@ -1,4 +1,4 @@
-PImage playerBattle, enemyBattle;
+PImage playerBattle, enemyBattle, birdBattleSprite;
 
 enum Choice {ATTACK, RUN, HEAL, PARTY}
 
@@ -129,7 +129,7 @@ void battle(){
     int characterBattleSpriteY = height - height/2 - height/3;
 
     //draw enemy
-    copy(enemyBattle, 0, 0, 197, 302, enemyBattleSpriteX, enemyBattleSpriteY, width/4, height/3); //draw enemy
+    image(currentEnemy.getSprite(), enemyBattleSpriteX, enemyBattleSpriteY, width/4, height/3); //draw enemy
     fill(0);
     rect(10, 50, barWidth, 10); //enemy hp bar
     fill(255,0,0);

@@ -22,6 +22,7 @@ void setup(){
     tileSheet = loadImage("images/spritesheets/tileSheet.png");
     playerBattle = loadImage("images/spritesheets/playerBattle.png");
     enemyBattle = loadImage("images/spritesheets/enemyBattle.png");
+    birdBattleSprite = loadImage("images/spritesheets/birdBattleSprite.png");
 
     //stepSound = new SoundFile(this, "sound/step.wav");
 

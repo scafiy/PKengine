@@ -13,6 +13,10 @@ int playerYV = 0;  //y velocity of player
 int playerSheetX = 0; //x position on sprite sheet
 int playerSheetY = 0; //y position on sprite sheet
 
+int playerWalkingAnimationFrame = 0;
+
+int playerSpeed = 2;
+
 Enemy currentEnemy;
 
 public class Player{
@@ -90,50 +94,49 @@ public class Player{
 
     public void drawSprite(){ //draw player sprite
         copy(characterSheet, 
-        playerSheetX, playerSheetY, 30, 30,
+        playerSheetX, playerWalkingAnimationFrame * 30, 30, 30,
         playerX, playerY, tileSize, tileSize); 
     }
 
     public void moveUp(){
-            if(playerYV == 0 && playerXV == 0){
-                playerSheetX = 60;
-            }
-            if(playerY - tileSize >= 0 && playerYV == 0 && playerXV == 0){
-                playerYV -= tileSize;
-            }
+        if(playerYV == 0 && playerXV == 0){
+            playerSheetX = 60;
+        }
+        if(playerY - tileSize >= 0 && playerYV == 0 && playerXV == 0){
+            playerYV -= tileSize;
+        }
         
     }
 
     
     public void moveDown(){
-            if(playerYV == 0 && playerXV == 0){
-                playerSheetX = 0;
-            }
-            if( playerY + tileSize < rows * tileSize && playerYV == 0 && playerXV == 0){
-                playerYV += tileSize;
-            }
+        if(playerYV == 0 && playerXV == 0){
+            playerSheetX = 0;
+        }
+        if( playerY + tileSize < rows * tileSize && playerYV == 0 && playerXV == 0){
+            playerYV += tileSize;
+        }
     }
 
     
     public void moveLeft(){
-            if(playerYV == 0 && playerXV == 0){
-                playerSheetX = 30;
-            }
-            if( playerX - tileSize >= 0 && playerYV == 0 && playerXV == 0){
-                playerXV -= tileSize;
-            }
+        if(playerYV == 0 && playerXV == 0){
+            playerSheetX = 30;
+        }
+        if( playerX - tileSize >= 0 && playerYV == 0 && playerXV == 0){
+            playerXV -= tileSize;
+        }
 
         
     }
 
     
     public void moveRight(){
-            if(playerYV == 0 && playerXV == 0){
-                playerSheetX = 90;
-            }
-            if( playerX + tileSize < cols * tileSize && playerYV == 0 && playerXV == 0){
-                playerXV += tileSize;
-            
+        if(playerYV == 0 && playerXV == 0){
+            playerSheetX = 90;
+        }
+        if( playerX + tileSize < cols * tileSize && playerYV == 0 && playerXV == 0){
+            playerXV += tileSize;
         }
     }
 
@@ -141,26 +144,30 @@ public class Player{
 
     public void updatePosition(){ //move's player position based on velocity and displays walking animation
         if(playerXV > 0){
-            playerXV -= 4;
-            playerX += 4;
+            playerXV -= playerSpeed;
+            playerX += playerSpeed;
         }
         if(playerXV < 0){
-            playerXV += 4;
-            playerX -= 4;        
+            playerXV += playerSpeed;
+            playerX -= playerSpeed;        
         }
         if(playerYV > 0){
-            playerYV -= 4;
-            playerY += 4;
+            playerYV -= playerSpeed;
+            playerY += playerSpeed;
         }
         if(playerYV < 0){
-            playerYV += 4;
-            playerY -= 4;
+            playerYV += playerSpeed;
+            playerY -= playerSpeed;
         }
 
-        if(playerXV != 0 || playerYV != 0){ //bad animation
-            if(playerSheetY == 30) playerSheetY = 0;
-            else playerSheetY = 30;
+        if(playerXV != 0 || playerYV != 0){
+            if(playerWalkingAnimationFrame >= 1) playerWalkingAnimationFrame = 0;
+            else playerWalkingAnimationFrame++;
         }
+
+        else playerWalkingAnimationFrame = 0;
+
+
 
     }
 
