@@ -2,19 +2,32 @@
 PImage tileSheet, forest; //map textures
 
 int[][] tileMap = { //map
-    {1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,0,0,0,0,0,0,0,0,1,1,1},
-    {1,0,0,0,0,0,0,0,0,1,1,1},
-    {1,0,0,0,0,0,0,0,0,1,1,1},
-    {1,0,0,0,0,0,0,0,2,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1}
+    {0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,1,1,1,1,1,1,2,2,2,1,0},
+    {0,1,1,1,1,1,1,1,2,2,1,0},
+    {0,1,1,1,1,1,1,1,2,2,1,0},
+    {0,1,1,1,1,1,1,1,1,1,1,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0},
+
 
 };
 
 int rows = tileMap.length;  
 int cols = tileMap[0].length; 
+
+String currentArea = "route1";
+
+public void encounter(){
+    setState(gameState.BATTLE);
+    switch(currentArea){
+        case "route1":
+            currentEnemy = new Enemy("Bird", birdBattleSprite,  1, 10, 100, 100, 10, 9);
+        break;
+    }
+    
+    
+    dialogue.popUp("a wild " + currentEnemy.getName() + " appeared");
+}
 
 
 void drawWorld() { // function to display the overworld
@@ -28,11 +41,15 @@ void drawWorld() { // function to display the overworld
 
             switch (tile) {
                 case 0:
-                    copy(tileSheet, 30, 0, 30, 30, tileSize * col, tileSize * row, tileSize, tileSize);
+                    copy(tileSheet, 0, 0, 30, 30, tileSize * col, tileSize * row, tileSize, tileSize);
                     break;
 
                 case 1:
-                    copy(tileSheet, 0, 0, 30, 30, tileSize * col, tileSize * row, tileSize, tileSize);
+                    copy(tileSheet, 30, 0, 30, 30, tileSize * col, tileSize * row, tileSize, tileSize);
+                    break;
+
+                case 2:
+                    copy(tileSheet, 60, 0, 30, 30, tileSize * col, tileSize * row, tileSize, tileSize);
                     break;
             }
         }

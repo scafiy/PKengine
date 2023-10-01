@@ -15,7 +15,7 @@ int playerSheetY = 0; //y position on sprite sheet
 
 int playerWalkingAnimationFrame = 0;
 
-int playerSpeed = 2;
+int playerSpeed = 4;
 
 Enemy currentEnemy;
 
@@ -74,7 +74,7 @@ public class Player{
     }
 
 
-    public void levelUp(double expGain){
+    public boolean levelUp(double expGain){
         currentEXP += expGain;
         if (currentEXP >= maxEXP){
             level++;
@@ -84,8 +84,15 @@ public class Player{
             currentHP = maxHP;
             ATK += 5;
             SPEED += 5;
+            return true;
         }
+        return false;
     }
+
+    public boolean isDead(){
+        return currentHP <= 0;
+    }
+
 
     public void heal(float HP){
         if (currentHP + HP >= maxHP) currentHP = maxHP;
@@ -97,6 +104,9 @@ public class Player{
         playerSheetX, playerWalkingAnimationFrame * 30, 30, 30,
         playerX, playerY, tileSize, tileSize); 
     }
+
+
+
 
     public void moveUp(){
         if(playerYV == 0 && playerXV == 0){
@@ -162,7 +172,7 @@ public class Player{
 
         if(playerXV != 0 || playerYV != 0){
             if(playerWalkingAnimationFrame >= 1) playerWalkingAnimationFrame = 0;
-            else playerWalkingAnimationFrame++;
+            else if(time % 2 == 0) playerWalkingAnimationFrame++;
         }
 
         else playerWalkingAnimationFrame = 0;

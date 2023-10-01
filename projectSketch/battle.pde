@@ -1,33 +1,77 @@
-PImage playerBattle, enemyBattle, birdBattleSprite;
+PImage playerBattle, birdBattleSprite;
+
+//ui fields
+
+float boxUIHeight = height/3.5;
+float battleUIWidth = width/3;
+int battleUIHeight = 50;
+float barWidth = width/3;
+
+//enemy fields
+public int enemyBattleSpriteX = width - width/3;
+public int enemyBattleSpriteY = 0;
+
+//player fields
+public int characterBattleSpriteX = 0;
+public int characterBattleSpriteY = height - height/2 - height/3;
+
 
 enum Choice {ATTACK, RUN, HEAL, PARTY}
 
 Choice pointerHover = Choice.ATTACK;
 
+
 void turn(String move){
-    if(player.getSPEED() > currentEnemy.getSPEED()){ //if player is faster then player goes first
-        //player turn
-        if (player.getCurrentHP() > 0){
-            if (move == "Attack") currentEnemy.takeDamage(player.getATK());
-            if (move == "Heal") player.heal(player.getMaxHP());
-         }
-        //enemy turn
-        if (currentEnemy.getCurrentHP() > 0) player.takeDamage(currentEnemy.getATK());
-    }
+    if (player.isDead()) return;
 
-    else{ //if enemy is faster then enemy goes first
-        //enemy turn
-        if (currentEnemy.getCurrentHP() > 0) player.takeDamage(currentEnemy.getATK());
-        //player turn
-        if (player.getCurrentHP() > 0) if (move == "Attack") currentEnemy.takeDamage(player.getATK());
-    }
+    boolean playerFaster = false;
 
+    if(player.getSPEED() > currentEnemy.getSPEED()){ playerFaster = true;}
+    if(player.getSPEED() <= currentEnemy.getSPEED()){ playerFaster = false;}
+
+    dialogue.clear();
+    setState(gameState.DIALOGUE);
+
+    if(playerFaster){
+        playerTurn(move); if(move == "Run") return;
+        enemyTurn();
+    }
+    else{
+        enemyTurn();
+        playerTurn(move);
+    }
+}
+
+void playerTurn(String move){
+
+    //player turn
+    if (player.getCurrentHP() > 0){
+        if (move == "Attack") {
+            currentEnemy.takeDamage(player.getATK());
+            dialogue.add("you used attack!");
+        }
+
+        if (move == "Heal"){ 
+            player.heal(player.getMaxHP());
+            dialogue.add("you used heal!");
+        }
+        if (move == "Run") {
+
+            setState(gameState.OVERWORLD);
+            dialogue.popUp("you ran away");
+        }
+    }
+}
+
+void enemyTurn(){
+    if (currentEnemy.getCurrentHP() > 0){ 
+        player.takeDamage(currentEnemy.getATK());
+        dialogue.add(currentEnemy.getName() + " used attack!");
+    }
 }
 
 
-
-
-//move around pointer in the battle menu
+//move around battle menu pinter
 void BMPointerUp(){
     if (pointerHover == Choice.RUN) pointerHover = Choice.ATTACK;
     if (pointerHover == Choice.HEAL) pointerHover = Choice.PARTY;
@@ -48,13 +92,13 @@ void BMPointerRight(){
     if (pointerHover == Choice.RUN) pointerHover = Choice.HEAL;
 }
 
-void selectChoice(){
+void selectChoice(){ //player's selected choice this turn
     switch(pointerHover){
         case ATTACK:
             turn("Attack");
             break;
         case RUN:
-            stateStack.push(gameState.OVERWORLD);
+            turn("Run");
             break;
         case PARTY:
             break;
@@ -64,11 +108,8 @@ void selectChoice(){
     }
 }
 
-void battleChoiceUI(){
+void battleChoiceUI(){ //display ui to select choice 
 
-    float boxUIHeight = height/3.5;
-    float battleUIWidth = width/3;
-    int battleUIHeight = 50;
 
     fill(255);
     strokeWeight(5);
@@ -111,22 +152,8 @@ void battleChoiceUI(){
     triangle(BMpointerX, BMpointerY, BMpointerX - pointerLength, BMpointerY + pointerLength, BMpointerX - pointerLength, BMpointerY - pointerLength);
 }
 
-void battle(){
+void battle(){ //display battle
     background(255,255,255);
-
-
-    //ui fields
-    float boxUIHeight = height/3.5;
-    float barWidth = width/3;
-    int battleUIHeight = 50;
-
-    //enemy fields
-    int enemyBattleSpriteX = width - width/3;
-    int enemyBattleSpriteY = 0;
-
-    //player fields
-    int characterBattleSpriteX = 0;
-    int characterBattleSpriteY = height - height/2 - height/3;
 
     //draw enemy
     image(currentEnemy.getSprite(), enemyBattleSpriteX, enemyBattleSpriteY, width/4, height/3); //draw enemy
@@ -164,12 +191,13 @@ void battle(){
     textAlign(TOP, LEFT);
     textSize(24);
     fill(0);
-    //text("a wild enemy appeared!", 10, height - 100);
     
     battleChoiceUI();
+
     if (currentEnemy.getCurrentHP() <= 0){
-        player.levelUp(currentEnemy.getEXP());
-        stateStack.push(gameState.OVERWORLD);
+       
+        if(player.levelUp(currentEnemy.getEXP())) dialogue.popUp("you leveled up to LV: " + player.getLevel());
+        else stateStack.push(gameState.OVERWORLD);
     }
 
   

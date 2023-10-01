@@ -27,11 +27,9 @@ void keyPressed() {
             if (keyCode == LEFT) player.moveLeft();
             if (keyCode == RIGHT) player.moveRight();
 
-            if (keyCode == 'B' || keyCode == 'b') {
-                stateStack.push(gameState.BATTLE);
-                currentEnemy = new Enemy("Bird", birdBattleSprite,  1, 10, 100, 100, 10, 9);
-            }
+            if (keyCode == 'B' || keyCode == 'b') encounter(); //force encounter for testing
             
+            if (keyCode == 'Z' || keyCode == 'z') stateStack.push(gameState.DIALOGUE); //force dialogue for testing
         break;
 
         case BATTLE:
@@ -40,6 +38,10 @@ void keyPressed() {
             if (keyCode == LEFT) BMPointerLeft();
             if (keyCode == RIGHT) BMPointerRight();
             if (keyCode == 'Z' || keyCode == 'z') selectChoice();
+        break;
+
+        case DIALOGUE:
+            if (keyCode == 'Z' || keyCode == 'z') dialogue.nextLine();
         break;
     }
 }

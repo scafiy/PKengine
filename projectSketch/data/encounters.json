@@ -1,0 +1,27 @@
+{
+    "route1Enemies": [
+        {
+            "name": "bird",
+            "sprite": "birdBattleSprite",
+            "level": 1,
+            "EXP": 10,
+            "maxHP": 10,
+            "ATK": 1,
+            "SPEED": 10
+        },
+
+        {
+            "name": "bird",
+            "sprite": "birdBattleSprite",
+            "level": 1,
+            "EXP": 10,
+            "maxHP": 10,
+            "ATK": 1,
+            "SPEED": 10
+        }
+    ],
+
+    "route2Enemies": [
+
+    ]
+}

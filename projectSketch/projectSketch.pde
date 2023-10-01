@@ -2,6 +2,11 @@ import java.util.Stack;
 //import processing.sound.*; //import sound processing library
 //SoundFile stepSound; 
 
+int height = 450;
+int width = 450;
+
+int time = 0;
+
 
 enum gameState {STARTMENU, OVERWORLD, BATTLE, DIALOGUE, GAMEOVER}
 
@@ -10,6 +15,11 @@ private Stack<gameState> stateStack = new Stack<gameState>();
 PImage startUpBG;
 
 int tileSize = 40;
+
+void setState(gameState state){
+    stateStack.push(state);
+}
+
 
 void setup(){
     size(450,450);
@@ -21,10 +31,12 @@ void setup(){
     characterSheet = loadImage("images/spritesheets/characterSheet.png");
     tileSheet = loadImage("images/spritesheets/tileSheet.png");
     playerBattle = loadImage("images/spritesheets/playerBattle.png");
-    enemyBattle = loadImage("images/spritesheets/enemyBattle.png");
     birdBattleSprite = loadImage("images/spritesheets/birdBattleSprite.png");
 
     //stepSound = new SoundFile(this, "sound/step.wav");
+
+    dialogue = new Dialogue(new ArrayList<String>()); //construct dialogue object
+
 
 
     //load states
@@ -62,6 +74,10 @@ void draw(){
             battle();
         break;
 
+        case DIALOGUE:
+            dialogue.display();
+        break;
+
         case GAMEOVER:
             background(255, 0, 0);
             textAlign(CENTER, CENTER);
@@ -75,6 +91,6 @@ void draw(){
     }
 
     if (player.getCurrentHP() <= 0) stateStack.push(gameState.GAMEOVER);
-    
+    time++;
 }
 
