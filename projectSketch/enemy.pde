@@ -9,7 +9,7 @@ public class Enemy{
     private float ATK;
     private float SPEED;
 
-    //constructer
+    //constructers
     public Enemy(String name, PImage sprite, int level, float EXP, float currentHP,float maxHP, float ATK, float SPEED) {
         this.name = name;
         this.level = level;
@@ -19,6 +19,18 @@ public class Enemy{
         this.SPEED = SPEED;
         this.EXP = EXP;
         this.sprite = sprite;
+
+    }
+
+    public Enemy(Enemy other) {
+        this.name = other.name;
+        this.sprite = other.sprite;
+        this.level = other.level;
+        this.EXP = other.EXP;
+        this.maxHP = other.maxHP;
+        this.currentHP = other.currentHP;
+        this.ATK = other.ATK;
+        this.SPEED = other.SPEED;
 
     }
 
@@ -35,9 +47,6 @@ public class Enemy{
     public void takeDamage(float damage){
         if (this.currentHP != 0) this.currentHP -= damage;
     }
-
-
-
 
 
 }

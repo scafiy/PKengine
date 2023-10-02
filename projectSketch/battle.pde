@@ -110,7 +110,6 @@ void selectChoice(){ //player's selected choice this turn
 
 void battleChoiceUI(){ //display ui to select choice 
 
-
     fill(255);
     strokeWeight(5);
     rect(15/2, height - boxUIHeight - 10, width/3 - 15, boxUIHeight); //draw border for dialogue
@@ -160,7 +159,9 @@ void battle(){ //display battle
     fill(0);
     rect(10, 50, barWidth, 10); //enemy hp bar
     fill(255,0,0);
-    rect(10, 50, barWidth * (currentEnemy.getCurrentHP() / currentEnemy.getMaxHP()), 10); //enemy hp bar
+    
+    float enemyHPBarLength = ((barWidth * (currentEnemy.getCurrentHP() / currentEnemy.getMaxHP())) >= 0) ? (barWidth * (currentEnemy.getCurrentHP() / currentEnemy.getMaxHP())) : 0;
+    rect(10, 50, enemyHPBarLength, 10); //enemy hp bar
     fill(0);
     text(currentEnemy.getName() + " Lv:" + currentEnemy.getLevel(), 10, 40);
 

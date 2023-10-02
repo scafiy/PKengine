@@ -35,6 +35,7 @@ public class Dialogue{
         if (currentLine >= dialogueList.size()) { //resets dialouge when all lines are read
             stateStack.pop();
             currentLine = 0;
+            dialogueList.clear();
             return;
         } 
 

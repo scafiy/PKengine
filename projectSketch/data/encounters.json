@@ -1,5 +1,5 @@
 {
-    "route1Enemies": [
+    "area1": [
         {
             "name": "bird",
             "sprite": "birdBattleSprite",
@@ -11,17 +11,17 @@
         },
 
         {
-            "name": "bird",
-            "sprite": "birdBattleSprite",
+            "name": "slime",
+            "sprite": "slimeBattleSprite",
             "level": 1,
-            "EXP": 10,
-            "maxHP": 10,
-            "ATK": 1,
-            "SPEED": 10
+            "EXP": 20,
+            "maxHP": 12,
+            "ATK": 5,
+            "SPEED": 5
         }
     ],
 
-    "route2Enemies": [
+    "area2": [
 
     ]
 }
