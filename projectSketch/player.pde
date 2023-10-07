@@ -31,11 +31,11 @@ public class Player{
     
     //constructer
     public Player(int level, int exp) {
-        this.level = level;
+        this.level = 10;
         this.currentEXP = currentEXP;
         this.maxEXP = 10;
-        this.currentHP = 100;
-        this.maxHP = 100;
+        this.currentHP = 10;
+        this.maxHP = 10;
         this.ATK = 10;
         this.SPEED = 10;
 
@@ -79,9 +79,10 @@ public class Player{
         if (currentEXP >= maxEXP){
             level++;
             currentEXP = 0;
+            player.heal(maxHP);
+
             maxEXP += 10;
             maxHP += 10;
-            currentHP = maxHP;
             ATK += 5;
             SPEED += 5;
             return true;
@@ -104,9 +105,6 @@ public class Player{
         playerSheetX, playerWalkingAnimationFrame * 30, 30, 30,
         playerX, playerY, tileSize, tileSize); 
     }
-
-
-
 
     public void moveUp(){
         if(playerYV == 0 && playerXV == 0){
@@ -135,9 +133,7 @@ public class Player{
         }
         if( playerX - tileSize >= 0 && playerYV == 0 && playerXV == 0){
             playerXV -= tileSize;
-        }
-
-        
+        }  
     }
 
     
@@ -149,8 +145,6 @@ public class Player{
             playerXV += tileSize;
         }
     }
-
-
 
     public void updatePosition(){ //move's player position based on velocity and displays walking animation
         if(playerXV > 0){

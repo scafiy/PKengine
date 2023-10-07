@@ -10,8 +10,7 @@ public class Dialogue{
         this.currentLine = 0;
     }
 
-     
-
+    
     void overwrite(ArrayList<String> newdialogue){
         this.dialogueList = newdialogue;
     }
@@ -55,6 +54,11 @@ public class Dialogue{
 
     void previousLine(){
         currentLine--;
+    }
+
+    boolean isEmpty(){
+        if (dialogueList.size() == 0)return true;
+        return false;
     }
 
      
