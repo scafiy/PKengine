@@ -27,8 +27,8 @@ public class Enemy{
         this.sprite = other.sprite;
         this.level = level;
         this.EXP = other.EXP + level*0.5;
-        this.maxHP = other.maxHP + level*0.8;
-        this.currentHP = other.currentHP + level*0.8;
+        this.maxHP = other.maxHP + level*0.5;
+        this.currentHP = other.currentHP + level*0.5;
         this.ATK = other.ATK + level*0.5;
         this.SPEED = other.SPEED + level*0.5;
 

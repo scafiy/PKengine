@@ -4,8 +4,8 @@ Player player;
 
 int playerSize = tileSize;
 
-int playerX = 0; //x positon of player
-int playerY = 0; //y positon of player
+int playerX = tileSize; //x positon of player
+int playerY = tileSize; //y positon of player
 
 int playerXV = 0; //x velocity of player
 int playerYV = 0;  //y velocity of player
@@ -22,22 +22,34 @@ Enemy currentEnemy;
 public class Player{
     //fields
     private int level;
-    private int currentEXP;
-    private int maxEXP;
+    private float currentEXP;
+    private float maxEXP;
     private float currentHP;
     private float maxHP;
     private float ATK;
     private float SPEED;
-    
+
+    private float baseEXP;
+    private float baseHP;
+    private float baseATK;
+    private float baseSPEED;
+
     //constructer
     public Player(int level, int exp) {
-        this.level = 10;
+        this.level = level;
         this.currentEXP = currentEXP;
+
+        this.baseEXP = 10;
+        this.baseHP = 10;
+        this.baseATK = 10;
+        this.baseSPEED = 10;
+
+
         this.maxEXP = 10;
-        this.currentHP = 10;
-        this.maxHP = 10;
-        this.ATK = 10;
-        this.SPEED = 10;
+        this.maxHP = baseHP;
+        this.currentHP = maxHP;
+        this.ATK = baseATK;
+        this.SPEED = baseSPEED;
 
     }
 
@@ -80,14 +92,18 @@ public class Player{
             level++;
             currentEXP = 0;
             player.heal(maxHP);
-
-            maxEXP += 10;
-            maxHP += 10;
-            ATK += 5;
-            SPEED += 5;
+            maxEXP = baseEXP + (level*2.5);
+            maxHP = baseHP + (level*1.5);
+            ATK = baseATK + (level*1.5);
+            SPEED = baseSPEED + (level*1.5);
+            audio.play(levelUpSound);
             return true;
         }
         return false;
+    }
+
+    public void dropEXP(){
+        currentEXP = 0;
     }
 
     public boolean isDead(){
@@ -110,7 +126,7 @@ public class Player{
         if(playerYV == 0 && playerXV == 0){
             playerSheetX = 60;
         }
-        if(playerY - tileSize >= 0 && playerYV == 0 && playerXV == 0){
+        if(playerY - tileSize >= 0 && playerYV == 0 && playerXV == 0 && world.isWalkable("up")){
             playerYV -= tileSize;
         }
         
@@ -121,7 +137,7 @@ public class Player{
         if(playerYV == 0 && playerXV == 0){
             playerSheetX = 0;
         }
-        if( playerY + tileSize < rows * tileSize && playerYV == 0 && playerXV == 0){
+        if( playerY + tileSize < rows * tileSize && playerYV == 0 && playerXV == 0 && world.isWalkable("down")) {
             playerYV += tileSize;
         }
     }
@@ -131,7 +147,7 @@ public class Player{
         if(playerYV == 0 && playerXV == 0){
             playerSheetX = 30;
         }
-        if( playerX - tileSize >= 0 && playerYV == 0 && playerXV == 0){
+        if( playerX - tileSize >= 0 && playerYV == 0 && playerXV == 0 && world.isWalkable("left")){
             playerXV -= tileSize;
         }  
     }
@@ -141,7 +157,7 @@ public class Player{
         if(playerYV == 0 && playerXV == 0){
             playerSheetX = 90;
         }
-        if( playerX + tileSize < cols * tileSize && playerYV == 0 && playerXV == 0){
+        if( playerX + tileSize < cols * tileSize && playerYV == 0 && playerXV == 0 && world.isWalkable("right")){
             playerXV += tileSize;
         }
     }
@@ -176,4 +192,3 @@ public class Player{
     }
 
 }
-

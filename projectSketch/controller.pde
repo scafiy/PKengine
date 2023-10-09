@@ -8,12 +8,14 @@ void mousePressed() {
     switch (stateStack.peek()) {
         case STARTMENU :
             stateStack.pop();
+            audio.play(selectSound);
         break;
 
         case GAMEOVER :
             stateStack.pop();
             stateStack.push(gameState.OVERWORLD);
             player.heal(player.getMaxHP());
+            audio.play(selectSound);
         break;
 
         case PAUSE:
@@ -25,14 +27,17 @@ void mousePressed() {
 
 void keyPressed() {
     switch (stateStack.peek()) {
-        case STARTMENU :
+        case STARTMENU:
             stateStack.pop();
+            audio.play(selectSound);
         break;	
 
-        case GAMEOVER :
+        case GAMEOVER:
             stateStack.pop();
             stateStack.push(gameState.OVERWORLD);
             player.heal(player.getMaxHP());
+            audio.play(selectSound);
+
         break;	
 
         case OVERWORLD:
@@ -45,15 +50,35 @@ void keyPressed() {
         break;
 
         case BATTLE:
-            if (pressUp()) battle.pointerUp();
-            if (pressDown()) battle.pointerDown();
-            if (pressLeft()) battle.pointerLeft();
-            if (pressRight()) battle.pointerRight();
-            if (pressSelect()) battle.selectChoice();
+            if (pressUp()) {
+                battle.pointerUp();
+                audio.play(pointerSound);
+            }
+
+            if (pressDown()){ 
+                battle.pointerDown();
+                audio.play(pointerSound);
+            }
+            if (pressLeft()){ 
+                battle.pointerLeft();
+                audio.play(pointerSound);
+            }
+            if (pressRight()) {
+                battle.pointerRight();
+                audio.play(pointerSound);
+            }
+
+            if (pressSelect()){
+                battle.selectChoice();
+                audio.play(selectSound);
+            }
         break;
 
         case DIALOGUE:
-            if (pressSelect()) dialogue.nextLine();
+            if (pressSelect()) {
+                dialogue.nextLine();
+                audio.play(selectSound);
+            }
         break;
 
         case PAUSE:

@@ -152,6 +152,8 @@ public class Battle {
         //player turn
         if (player.getCurrentHP() > 0){
             if (move == "Attack") {
+                audio.play(atkSound);
+                audio.play(damageSound);
                 currentEnemy.takeDamage(player.getATK());
                 dialogue.add("you used attack!");
             }
@@ -160,15 +162,17 @@ public class Battle {
                 player.heal(player.getMaxHP());
                 dialogue.add("you used heal!");
                 healsLeft--;
+                audio.play(healSound);
             }
             if (move == "Run") {
                 setState(gameState.OVERWORLD);
                 dialogue.popUp("you ran away");
                 resetHealsCount();
+                audio.play(runSound);
             }
 
             if (move == "Inspect"){
-                dialogue.add("you used inspect!");
+                dialogue.add("you inspected this " + currentEnemy.getName() + ". its stats are:"); 
                 inspect(currentEnemy);
             }
         }
@@ -178,6 +182,8 @@ public class Battle {
         if (currentEnemy.getCurrentHP() > 0){ 
             player.takeDamage(currentEnemy.getATK());
             dialogue.add(currentEnemy.getName() + " used attack!");
+                            audio.play(atkSound);
+                audio.play(damageSound);
         }
     }
 
@@ -224,8 +230,9 @@ public class Battle {
     }
 
     void inspect(Enemy subject){
-        dialogue.add("HP: " + currentEnemy.getMaxHP() + "ATK: " + currentEnemy.getATK() + " SPEED: " + currentEnemy.getSPEED() + " EXP drop: " + currentEnemy.getEXP() ); 
-    }
+        dialogue.add(currentEnemy.getMaxHP() + "HP,  "  + currentEnemy.getATK() + " ATK,  " + currentEnemy.getSPEED() + "  SPEED and  " +  currentEnemy.getEXP() + "  EXP."); 
+        dialogue.add("your stats are" + player.getMaxHP() + "HP,  "  + player.getATK() + " ATK,  " + player.getSPEED() + "  SPEED.");
+    }   
 
     void resetHealsCount(){
         healsLeft = maxHeals;
