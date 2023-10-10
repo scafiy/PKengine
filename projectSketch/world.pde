@@ -94,7 +94,8 @@ public class World{
                 currentEnemy = new Enemy(area3Enemies.get((int) random(area3Enemies.size())), (int) random(20,50)); // get a random enemy from the list
             break;
         }
-        
+        outgoingDMG = 0;
+        incomingDMG = 0;
         dialogue.popUp("a wild " + currentEnemy.getName() + " appeared!");
     }
 

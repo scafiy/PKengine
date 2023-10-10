@@ -4,39 +4,23 @@ boolean pressLeft() {return keyCode == LEFT || keyCode == 'A' || keyCode == 'a';
 boolean pressRight() {return keyCode == RIGHT || keyCode == 'D' || keyCode == 'd';} //check if player pressed a right button
 boolean pressSelect() {return keyCode == 'Z' || keyCode == 'z' || keyCode == 'X' || keyCode == 'x' || keyCode == ' ';} //check if player pressed one of the select buttons
 
-void mousePressed() {
-    switch (stateStack.peek()) {
-        case STARTMENU :
-            stateStack.pop();
-            audio.play(selectSound);
-        break;
-
-        case GAMEOVER :
-            stateStack.pop();
-            stateStack.push(gameState.OVERWORLD);
-            player.heal(player.getMaxHP());
-            audio.play(selectSound);
-        break;
-
-        case PAUSE:
-            stateStack.pop();
-        break;
-    }
-
-}
 
 void keyPressed() {
     switch (stateStack.peek()) {
         case STARTMENU:
-            stateStack.pop();
-            audio.play(selectSound);
+            if(pressSelect()){
+                stateStack.pop();
+                audio.play(selectSound);
+            }
         break;	
 
         case GAMEOVER:
-            stateStack.pop();
-            stateStack.push(gameState.OVERWORLD);
-            player.heal(player.getMaxHP());
-            audio.play(selectSound);
+            if(pressSelect()){
+                stateStack.pop();
+                stateStack.push(gameState.OVERWORLD);
+                player.heal(player.getMaxHP());
+                audio.play(selectSound);
+            }
 
         break;	
 
@@ -87,7 +71,3 @@ void keyPressed() {
     }
 }
 
-void keyReleased(){
-    switch (stateStack.peek()) {
-    }
-}

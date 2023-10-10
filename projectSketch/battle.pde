@@ -25,16 +25,33 @@ Choice pointerHover = Choice.ATTACK;
 int maxHeals = 2;
 int healsLeft = maxHeals;
 
+double incomingDMG = 0;
+double outgoingDMG = 0;
+
+
 public class Battle {
 
     void draw(){
         background(255,255,255);
-
         battle.drawEnemy();
         battle.drawPlayer();
         battle.drawBorder();
         battle.drawChoiceUI();
     }
+
+    void updateHealth(){
+        if (incomingDMG > 0 && !player.isDead()) {
+            player.takeDamage(1);
+            incomingDMG--;
+        }
+
+        if (outgoingDMG > 0 && currentEnemy != null && !currentEnemy.isDead()){
+            currentEnemy.takeDamage(1);
+            outgoingDMG--;
+        }
+    }
+
+
 
     void drawChoiceUI(){ //display ui to select choice 
 
@@ -154,7 +171,8 @@ public class Battle {
             if (move == "Attack") {
                 audio.play(atkSound);
                 audio.play(damageSound);
-                currentEnemy.takeDamage(player.getATK());
+                //currentEnemy.takeDamage(player.getATK());
+                outgoingDMG = player.getATK();
                 dialogue.add("you used attack!");
             }
 
@@ -180,10 +198,11 @@ public class Battle {
 
     void enemyTurn(){
         if (currentEnemy.getCurrentHP() > 0){ 
-            player.takeDamage(currentEnemy.getATK());
+            incomingDMG = currentEnemy.getATK();
+            //player.takeDamage(currentEnemy.getATK());
             dialogue.add(currentEnemy.getName() + " used attack!");
-                            audio.play(atkSound);
-                audio.play(damageSound);
+            audio.play(atkSound);
+            audio.play(damageSound);
         }
     }
 
@@ -197,7 +216,6 @@ public class Battle {
         if (pointerHover == Choice.INSPECT) pointerHover = Choice.HEAL;
 
     }
-
     void pointerLeft(){
         if (pointerHover == Choice.INSPECT) pointerHover = Choice.ATTACK;
         if (pointerHover == Choice.HEAL) pointerHover = Choice.RUN;

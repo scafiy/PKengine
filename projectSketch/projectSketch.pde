@@ -116,11 +116,6 @@ void setup(){
         area3Enemies.add(new Enemy(enemyData.getString("name"), sprite, enemyData.getInt("level"), enemyData.getInt("EXP"), enemyData.getInt("maxHP"), enemyData.getInt("maxHP"), enemyData.getInt("ATK"), enemyData.getInt("SPEED")));
     }
 
-
-
-    
-
-
     surface.setTitle("RPGengine");
     surface.setIcon(characterSheet.get(0, 0, 30, 30));
 }
@@ -138,9 +133,12 @@ void draw(){
             text("press z to start", width/2, height/2 + 24);
         break;	
 
+
         case BATTLE:
             battle.draw();
+            battle.updateHealth();
             if (currentEnemy.isDead()) battle.win();
+
         break;
 
         case OVERWORLD:

@@ -46,6 +46,8 @@ public class Dialogue{
         textSize(24);
         fill(0);
         text(dialogueList.get(currentLine), 15, height - 100);
+        textSize(12);
+        text("press z to continue", width-110, height-20);
     }
 
     void nextLine(){
