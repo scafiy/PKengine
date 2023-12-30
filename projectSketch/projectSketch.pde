@@ -128,7 +128,7 @@ void draw(){
             textAlign(CENTER, CENTER);
             textSize(32);
             fill(255);
-            text("RPG engine", width/2, height/2 - 11);
+            text("PKengine", width/2, height/2 - 11);
             textSize(12);
             text("press z to start", width/2, height/2 + 24);
         break;	
